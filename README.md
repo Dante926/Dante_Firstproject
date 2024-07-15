@@ -19,3 +19,5 @@ npm run build
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## 作者：攀哥
+
+## 联系方式：请在issue中联系作者吧...
