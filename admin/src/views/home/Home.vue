@@ -24,7 +24,7 @@
                             走自己的路,让别人说去吧！
                         </el-col>
                     </el-row> -->
-                    <h2 style="line-height: 100px;"> {{welcomeText}}</h2>
+                    <h2 style="line-height: 100px;"> {{ welcomeText }}</h2>
                 </el-col>
             </el-row>
         </el-card>
@@ -35,9 +35,17 @@
                     <span>百院产品</span>
                 </div>
             </template>
-            <el-carousel :interval="4000" type="card" height="200px">
-                <el-carousel-item v-for="item in 6" :key="item">
-                    <h3 text="2xl" justify="center">{{ item }}</h3>
+            <el-carousel v-if="loopList.length" :interval="4000" type="card" height="200px">
+                <el-carousel-item v-for="item in loopList" :key="item.id">
+                    <h3 text="2xl" justify="center">
+                        <div :style="{
+                            backgroundImage:`url(http://127.0.0.1:8089${item.cover})`,
+                            backgroundSize:'cover',//也可以选择使用contain
+                            backgroundPosition:'center'
+                        }">
+                            {{ item.title }}
+                        </div>
+                    </h3>
                 </el-carousel-item>
             </el-carousel>
         </el-card>
@@ -47,7 +55,8 @@
 <script setup>
 import axios from 'axios';
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed,onMounted,ref } from 'vue';
+
 
 const store = useStore();
 console.log(store.state);// 获取vuex中信息
@@ -59,12 +68,22 @@ console.log(store.state);// 获取vuex中信息
 
     其实就是简单的三元运算,在标签的:src中直接写也行的其实
 */
-const avatarUrl = computed(() => store.state.userInfo.avatar ? 'http://127.0.0.1:8089'+store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`)
+const avatarUrl = computed(() => store.state.userInfo.avatar ? 'http://127.0.0.1:8089' + store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`)
 // 用户welcomeText计算属性
 /* 
     new Date().getHours() 获取当前时间段小时数
 */
-const welcomeText = computed(() =>new Date().getHours()<12?'今天也要努力工作,要开心每一天~':'您可能累了，休息之后再继续吧~')
+const welcomeText = computed(() => new Date().getHours() < 12 ? '今天也要努力工作,要开心每一天~' : '您可能累了，休息之后再继续吧~')
+
+const loopList = ref([])
+onMounted(() => {
+    getData()
+})
+const getData = async () => {
+    const res = await axios.get('http://127.0.0.1:8089/api/product/getlist')
+    loopList.value = res.data.data
+    console.log(loopList.value);
+}
 </script>
 
 <style lang="scss" scoped>
