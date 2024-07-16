@@ -22,6 +22,8 @@ const userRouter = require('./router/user');
 const newsRouter = require('./router/news');
 // 导入产品路由模块
 const productRouter = require('./router/product');
+// 导入web路由模块
+const newsapiRouter = require('./router/NewsRouter');
 
 // 获取图片中间件
 app.get('/avataruploads/:fileId', (req, res) => {
@@ -66,6 +68,10 @@ app.get('/productuploads/:fileId', (req, res) => {
     })
 })
 
+// web前端路由
+app.use('/webapi/news', newsapiRouter); // web管理路由
+
+
 // 拦截路由中间件
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Expose-Headers', 'Authorization')// 允许跨域访问请求头中的token
@@ -99,7 +105,6 @@ app.use((req, res, next) => {
 app.use('/api/user', userRouter); //用户管理路由
 app.use('/api/news', newsRouter); //新闻管理路由
 app.use('/api/product', productRouter); //新闻管理路由
-
 // 启动服务器
 app.listen(8089, () => {
     console.log('Server running at http://127.0.0.1:8089');
