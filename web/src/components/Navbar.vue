@@ -6,7 +6,7 @@
             <el-menu-item index="/product">产品与服务</el-menu-item>
             <el-menu-item index="" @click="handleClick">登录</el-menu-item>
         </el-menu>
-        <div class="right">百院门户官网</div>
+        <div class="right">偏爱王冰冰</div>
     </div>
 </template>
 
@@ -33,5 +33,7 @@ const handleClick=()=>{
     // height: 159px;
     line-height: 139px;
     text-align: center;
+    // 透明
+    opacity: 0.1;
 }
 </style>

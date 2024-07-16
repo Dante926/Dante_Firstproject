@@ -22,6 +22,27 @@ const WebNewsHandler = {
                 res.send({ ActionType: "OK", data: results, message: '获取新闻列表成功' })
             })
         }
+    },
+
+    toplist: (req, res) => {
+        // Get query parameter
+        const { limit } = req.query;
+
+        // Check if limit parameter is present
+        if (limit) {
+            const sqlStr = 'SELECT * FROM news WHERE isPublish = ? ORDER BY editTime DESC LIMIT ?';
+            const isPublish = 1; // Assuming isPublish is a boolean flag in the database
+
+            db.query(sqlStr, [isPublish, parseInt(limit)], (err, results) => {
+                if (err) {
+                    console.error('Failed to retrieve list', err.message);
+                    return res.status(500).json({ ActionType: "Error", message: 'Failed to retrieve list' });
+                }
+                res.json({ ActionType: "OK", data: results, message: 'Successfully retrieved news list' });
+            });
+        } else {
+            res.status(400).json({ ActionType: "Error", message: 'Missing limit parameter' });
+        }
     }
 }
 module.exports = WebNewsHandler

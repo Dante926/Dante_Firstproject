@@ -6,5 +6,8 @@ const router = express.Router()
 const WebNewsHandler = require('../router_handler/webnews')
 
 router.get('/list',WebNewsHandler.list)
+router.get('/list/:id',WebNewsHandler.list)
+// 最新数据新闻
+router.get('/toplist',WebNewsHandler.toplist)
 
 module.exports = router
