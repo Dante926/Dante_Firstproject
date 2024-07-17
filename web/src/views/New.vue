@@ -38,19 +38,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed,watchEffect } from 'vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
+import { useRoute,useRouter } from 'vue-router'
 import { StarFilled } from '@element-plus/icons-vue'
 
 // 获取数据
 const route = useRoute()
-onMounted(async () => {
+watchEffect(async () => {
+    // 使用watchEffect(代替了onMounted)来监听路由的变化，当路由发生变化时，重新获取数据
     const res1 = await axios.get(`http://127.0.0.1:8089/webapi/news/list/${route.params.id}`)
     const res2 = await axios.get(`http://127.0.0.1:8089/webapi/news/toplist?limit=4`)
     currentNews.value = res1.data.data
     topNews.value = res2.data.data
-    console.log(res2);
+
 })
 const currentNews = ref({})
 const topNews = ref([])
@@ -61,8 +62,10 @@ const editTimeFormat = (editTime) => {
     return date.toLocaleString()
 }
 
+const router = useRouter()
 const handleClick = (id) => {
-    console.log(id);
+    router.push(`/new/${id}`)
+    // 销毁当前页面
 }
 </script>
 

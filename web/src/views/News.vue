@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="container">
-            <div class="news-header" :style="{ backgroundImage: `url(${require('@/assets/4.jpg')})` }">
+            <div class="news-header"
+                :style="{ backgroundImage: `url(${require('@/assets/4.jpg')})`, backgroundSize: 'cover' }">
             </div>
             <!-- 搜索栏 -->
             <div class="search">
@@ -88,7 +89,7 @@ import { Search } from '@element-plus/icons-vue';
 import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import _ from 'lodash'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const searchText = ref("");
 const visible = ref(false);
@@ -132,7 +133,7 @@ const tablelist = [
 const tabnews = computed(() => _.groupBy(newslist.value, item => item.category))
 
 const router = useRouter()
-const handleClick = (id)=>{
+const handleClick = (id) => {
     // console.log(id);
     router.push(`/new/${id}`)
 }
