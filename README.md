@@ -1,34 +1,23 @@
-# Vue+Node 门户管理网站
+# admin
 
-## 本地项目部署
-    将项目fork、clone、pull、下载zip包到本地文件夹后,在admin、server、web三个文件夹下分别执行npm i安装依赖包
+## Project setup
+```因为上传原因所以不上传node_modules，请运行项目时在终端中执行以下指令
+npm install
+```
 
+### Compiles and hot-reloads for development
+```运行前端项目指令
+npm run serve
+```
 
-## 运行项目
-    在admin、web文件夹下分别执行npm run serve启动前端项目
-    在server文件夹下执行node app.js 启动服务端项目
+### Compiles and minifies for production
+```
+npm run build
+```
 
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## 配置文件说明
-    所有第三方模块包含在package.json文件中
-    数据库配置在server/db/index.js中
+## 作者：攀哥
 
-
-## 项目简介说明：
-    1.本项目基于
-    前端：vue3框架+element-plus UI组件库，
-    后端：nodejs运行环境+express框架+mysql数据库，
-
-    2！.若不使用自带sql文件,该系统的用户管理还未添加注册功能，请在数据库中指定一个管理员账号
-    
-    3！.用户添加功能中，密码是没进行JWT加密的，请勿用于生产环境
-
-## 项目功能说明：
-#####   1.管理系统：
-        1.1.用户管理：添加、删除、修改、权限设置用户信息
-        1.2.文章(产品)管理：添加、删除、修改、预览文章信息
-
-#####   2.网站前端：
-        2.1.首页：展示网站首页信息
-        2.2.文章中心：展示网站文章(新闻)信息
-        2.3.产品与服务：展示产品信息
+## 联系方式：请在issue中联系作者吧...
