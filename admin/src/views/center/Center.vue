@@ -130,11 +130,12 @@
             return userForm.avatar;
         }
         // 否则，构建完整的后端URL
-        return 'http://127.0.0.1:8089' + store.state.userInfo.avatar;
+        return 'http://127.0.0.1:8089' + userForm.avatar;
     });
 
     // 提交表单(更新用户信息)
     const submitForm = () => {
+        //提交表单前把数据情况初始化
         // 表单需要通过Ref校验
         userFormRef.value.validate(async (valid) => {
             if (valid) {
