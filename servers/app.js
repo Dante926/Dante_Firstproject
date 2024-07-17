@@ -22,8 +22,10 @@ const userRouter = require('./router/user');
 const newsRouter = require('./router/news');
 // 导入产品路由模块
 const productRouter = require('./router/product');
-// 导入web路由模块
+// 导入web新闻路由模块
 const newsapiRouter = require('./router/NewsRouter');
+// 导入web产品路由模块
+const productapiRouter = require('./router/WebProduct');
 
 // 获取图片中间件
 app.get('/avataruploads/:fileId', (req, res) => {
@@ -69,7 +71,8 @@ app.get('/productuploads/:fileId', (req, res) => {
 })
 
 // web前端路由
-app.use('/webapi/news', newsapiRouter); // web管理路由
+app.use('/webapi/news', newsapiRouter); // web新闻管理路由
+app.use('/webapi/product', productapiRouter); // web产品管理路由
 
 
 // 拦截路由中间件
