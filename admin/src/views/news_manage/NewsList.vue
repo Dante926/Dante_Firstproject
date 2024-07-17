@@ -59,7 +59,7 @@
             <div>
                 <el-divider border-style="dashed" /> <!-- 分割线 -->
             </div>
-            <div v-html="preViewData.content"></div>
+            <div v-html="preViewData.content" class="htmlcontent"></div>
         </el-dialog>
     </div>
 </template>
@@ -137,7 +137,13 @@ const handleDelete = async (item) => {
         ElMessage.error('删除失败' + res.data.message)
     }
 }
-
-
-
 </script>
+
+<style lang="scss" scoped>
+// 限制预览新闻时图片超出容器宽度
+::v-deep .htmlcontent{
+    img{
+        max-width: 100%;
+    }
+}
+</style>
