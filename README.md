@@ -15,9 +15,24 @@ npm run serve
 npm run build
 ```
 
+### 项目部署上线说明
+```
+    1.使用宝塔面板一件上传文件：
+    2.在每个前端项目的vvue.config.js配置文件中更改运行端口
+    module.exports = {
+        devServer: {
+        port: 8081,
+        }
+    };
+    3.更改数据库配置
+    const db = mysql.createPool({
+    host: '8.134.110.209',          //公网ip地址
+    user: 'bin',                    //数据库用户名
+    password: 'GLwPnZDjP2fjh5My',   //数据库密码
+    database: 'bin',                //数据库名
+    });
+    4.前端项目的请求接口也要更改为对应的ip地址
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-## 作者：攀哥
-
-## 联系方式：请在issue中联系作者吧...

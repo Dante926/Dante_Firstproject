@@ -1,5 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
-module.exports = {
+module.exports = defineConfig({
+  transpileDependencies: true,
+  
   devServer: {
     proxy: {
       '/avataruploads': { // 这里的路径前缀匹配你请求图片时使用的路径前缀，可以根据实际情况调整
@@ -9,4 +11,4 @@ module.exports = {
       }
     }
   }
-};
+})
