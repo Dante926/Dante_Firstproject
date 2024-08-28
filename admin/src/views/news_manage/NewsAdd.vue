@@ -19,6 +19,10 @@
                 </el-select>
             </el-form-item>
 
+            <el-form-item label="联系" prop="title">
+                <el-input v-model="newsForm.call" />
+            </el-form-item>
+
             <el-form-item label="封面" prop="cover">
                 <el-upload class="avatar-uploader" action="" :show-file-list="false" :auto-upload="false"
                     :on-change="handleChangecover"><!-- 如果:auto-upload=""的值是true，那么上传地址将是action的值-->
@@ -55,6 +59,7 @@ const router = useRouter()
 const newsFormRef = ref()
 const store = useStore();
 const newsForm = reactive({
+    call:'',
     title: '',
     content: '',
     category: null, // 1 最新动态  2 典型案列 3 通知公告
@@ -64,6 +69,10 @@ const newsForm = reactive({
     username:store.state.userInfo.username
 })
 const newsFromRules = reactive({
+    call: [
+        { required: true, message: '请输入联系方式', trigger: 'blur' },
+        { min: 3, max: 45, message: '长度在 3 到 45 个字符', trigger: 'blur' }
+    ],
     title: [
         { required: true, message: '请输入新闻标题', trigger: 'blur' },
         { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
@@ -113,7 +122,6 @@ const submitForm = ()=>{
             console.log(newsForm);
             const res = await upload('http://127.0.0.1:8089/api/news/addnew', newsForm)
             if(res.ActionType === 'OK'){
-                // console.log(res.date);
                 ElMessage({
                     type: 'success',
                     message: res.message
@@ -129,7 +137,6 @@ const submitForm = ()=>{
                     message: res.message
                 })
             }
-            // router.push('/news_manage/newslist')
         }
     })
 }

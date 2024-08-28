@@ -71,7 +71,7 @@ app.get('/productuploads/:fileId', (req, res) => {
 })
 
 // web前端路由
-app.use('/webapi/news', newsapiRouter); // web新闻管理路由
+app.use('/webapi/news', newsapiRouter); // web新闻管理路由(包含一部分微信小程序端)
 app.use('/webapi/product', productapiRouter); // web产品管理路由
 
 

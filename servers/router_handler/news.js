@@ -7,13 +7,12 @@ const newsHandler = {
         // 封面图片处理
         const cover = req.file ? `/newsuploads/${req.file.filename}` : '';
         // 其他数据处理
-        const { title, content, category, isPublish, username } = req.body
+        const { title, content, category, isPublish, username, call} = req.body
         // 生成时间戳
         const editTime = new Date();
-
         // 数据库操作
-        const sqlStr = 'insert into news(title,content,category,cover,isPublish,editTime,username) values(?,?,?,?,?,?,?)';
-        db.query(sqlStr, [title, content, category, cover, isPublish, editTime, username], (err, results) => {
+        const sqlStr = 'insert into news(title,content,category,cover,isPublish,editTime,username,`call`) values(?,?,?,?,?,?,?,?)';
+        db.query(sqlStr, [title, content, category, cover, isPublish, editTime, username,call], (err, results) => {
             if (err) return res.send({ ActionType: "Error", message: err.message })
             // 如果数据库响应成功
             res.send({

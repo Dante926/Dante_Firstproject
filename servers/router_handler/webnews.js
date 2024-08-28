@@ -6,7 +6,7 @@ const WebNewsHandler = {
 
         // 小程序端分类type------------
         const { type } = req.query
-        const category =Number(type)+1
+        const category = Number(type) + 1
         // ----------------------------
 
         if (type) {
@@ -72,8 +72,6 @@ const WebNewsHandler = {
         // console.log(req.body);
         const sqlStr = `SELECT * FROM news WHERE title LIKE ?`
         db.query(sqlStr, [`%${name}%`], (err, result) => {
-            console.log(result);
-            
             if (err) {
                 return res.send({
                     status: 500,

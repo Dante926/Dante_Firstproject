@@ -34,5 +34,14 @@ npm run build
     4.前端项目的请求接口也要更改为对应的ip地址
 ```
 
+### 项目补充说明
+```
+①2024年8月28日21点53分：serve端的app.js文件中，读取图片的中间件代码段(中间件)可以直接替换成开放静态资源读取中间件 
+app.use(express.static('./public/avataruploads'))
+app.use(express.static('./public/newsuploads'))
+app.use(express.static('./public/productuploads'))
+②
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
