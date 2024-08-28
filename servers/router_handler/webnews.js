@@ -3,7 +3,7 @@ const db = require('../db/index');
 const WebNewsHandler = {
     // 获取新闻列表
     list: (req, res) => {
-        
+
         // 小程序端分类type------------
         const { type } = req.query
         const category =Number(type)+1
@@ -63,6 +63,27 @@ const WebNewsHandler = {
         } else {
             res.status(400).json({ ActionType: "Error", message: 'Missing limit parameter' });
         }
-    }
+    },
+
+    // 微信小程序端获取搜索历史
+    getsearch: (req, res) => {
+        const { name } = req.body;
+        console.log(name);
+        // console.log(req.body);
+        const sqlStr = `SELECT * FROM news WHERE title LIKE ?`
+        db.query(sqlStr, [`%${name}%`], (err, result) => {
+            console.log(result);
+            
+            if (err) {
+                return res.send({
+                    status: 500,
+                    message: '获取数据失败'
+                })
+            }
+            return res.send({
+                data: result
+            })
+        })
+    },
 }
 module.exports = WebNewsHandler
