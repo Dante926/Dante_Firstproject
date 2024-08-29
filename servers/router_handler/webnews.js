@@ -83,5 +83,73 @@ const WebNewsHandler = {
             })
         })
     },
+
+    // 微信小程序查询是否存在收藏接口
+    exitcollection: (req, res) => {
+        const { id, openid } = req.body
+        // 根据id和openid查询是否被收藏
+        const sqlStr = `SELECT * FROM collection WHERE id = ? AND openid = ?`
+        db.query(sqlStr, [id, openid], (err, result) => {
+            // 查询出错
+            if (err) return res.send({
+                status: 500,
+                message: '查询失败'
+            })
+            if (result.length === 0) {
+                return res.send({
+                    message: '未收藏'
+                })
+            } else {
+                return res.send({
+                    message: '已收藏'
+                })
+            }
+
+        })
+    },
+
+    // 收藏and取消收藏
+    ifcollection: (req, res) => {
+        const { id, openid } = req.body
+        // 根据id和openid查询是否存在收藏表中
+        const sqlStr = `SELECT * FROM collection WHERE id = ? AND openid = ?`
+        db.query(sqlStr, [id, openid], (err, result) => {
+            // 查询出错
+            if (err) return res.send({
+                status: 500,
+                message: '查询失败'
+            })
+            // 查询结果为空，说明没有收藏，则添加收藏
+            if (result.length === 0) {
+                const sqlStr = `INSERT INTO collection (id, openid) VALUES (?, ?)`
+                db.query(sqlStr, [id, openid], (err, result) => {
+                    // 添加收藏失败
+                    if (err) return res.send({
+                        status: 500,
+                        message: '添加收藏失败'
+                    })
+                    // 添加收藏成功
+                    return res.send({
+                        status: 200,
+                        message: '添加收藏成功'
+                    })
+                })
+            // 存在收藏，则取消收藏
+            } else {
+                const sqlStr = `DELETE FROM collection WHERE id = ? AND openid = ?`
+                db.query(sqlStr, [id, openid], (err, result) => {
+                    if (err) return res.send({
+                        status: 500,
+                        message: '取消收藏失败'
+                    })
+                    return res.send({
+                        status: 200,
+                        message: '取消收藏成功'
+                    })
+                })
+            }
+        })
+
+    }
 }
 module.exports = WebNewsHandler

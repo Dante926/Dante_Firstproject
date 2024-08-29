@@ -113,17 +113,17 @@ const submitForm = () => {
             if (res.ActionType === 'OK') {
                 ElMessage({
                     type: 'success',
-                    message: res.message+',请选择重新发布...'
+                    message: res.message + ',请选择重新发布...'
                 })
                 router.push(`/news_manage/newslist`)
             } else {
                 ElMessage({
                     type: 'error',
-                    message: res.message+',请选择重新发布...'
+                    message: res.message + ',请选择重新发布...'
                 })
                 router.push(`/news_manage/newslist`)
             }
-        }else{
+        } else {
             ElMessage({
                 type: 'error',
                 message: '更新失败，请重新编辑...'

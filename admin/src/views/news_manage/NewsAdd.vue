@@ -2,8 +2,8 @@
     <div>
         <el-page-header content="添加新闻" icon="" title="新闻管理" />
 
-        <el-form ref="newsFormRef" style="max-width: 1080px" :model="newsForm" :rules="newsFromRules" label-width="100px"
-            class="demo-ruleForm" :size="formSize" status-icon>
+        <el-form ref="newsFormRef" style="max-width: 1080px" :model="newsForm" :rules="newsFromRules"
+            label-width="100px" class="demo-ruleForm" :size="formSize" status-icon>
 
             <el-form-item label="标题" prop="title">
                 <el-input v-model="newsForm.title" />
@@ -59,14 +59,14 @@ const router = useRouter()
 const newsFormRef = ref()
 const store = useStore();
 const newsForm = reactive({
-    call:'',
+    call: '',
     title: '',
     content: '',
     category: null, // 1 最新动态  2 典型案列 3 通知公告
     cover: '',
     file: null,
     isPublish: 0, // 0 未发布 1 已发布
-    username:store.state.userInfo.username
+    username: store.state.userInfo.username
 })
 const newsFromRules = reactive({
     call: [
@@ -115,13 +115,13 @@ const handleChange = (data) => {
     newsForm.content = data
 }
 // 添加新闻方法
-const submitForm = ()=>{
+const submitForm = () => {
     // 校验表单
-    newsFormRef.value.validate(async (valid)=>{
-        if(valid){
+    newsFormRef.value.validate(async (valid) => {
+        if (valid) {
             console.log(newsForm);
             const res = await upload('http://127.0.0.1:8089/api/news/addnew', newsForm)
-            if(res.ActionType === 'OK'){
+            if (res.ActionType === 'OK') {
                 ElMessage({
                     type: 'success',
                     message: res.message
@@ -131,7 +131,7 @@ const submitForm = ()=>{
                     router.go(0)
 
                 }, 800);
-            }else{
+            } else {
                 ElMessage({
                     type: 'error',
                     message: res.message

@@ -141,8 +141,8 @@ const handleDelete = async (item) => {
 
 <style lang="scss" scoped>
 // 限制预览新闻时图片超出容器宽度
-::v-deep .htmlcontent{
-    img{
+::v-deep .htmlcontent {
+    img {
         max-width: 100%;
     }
 }

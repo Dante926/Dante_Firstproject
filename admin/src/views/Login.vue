@@ -9,11 +9,10 @@
 
 <template>
     <div>
-        <vue-particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded"
-            :options="options" />
+        <vue-particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded" :options="options" />
     </div>
 
-    <div class="formContaine">
+        <div class="formContaine">
         <h3>百院门户管理系统</h3>
         <el-form ref="loginFormRef" :model="loginForm" status-icon :rules="loginRules" label-width="80px"
             class="loginForm">
@@ -32,6 +31,7 @@
             </el-form-item>
         </el-form>
     </div>
+    
 </template>
 
 <script setup>
