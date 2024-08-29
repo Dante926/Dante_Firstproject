@@ -118,7 +118,7 @@ const WebNewsHandler = {
 
     // 收藏and取消收藏
     ifcollection: (req, res) => {
-        const { id, openid } = req.body
+        const { id, openid, category } = req.body
         // 根据id和openid查询是否存在收藏表中
         const sqlStr = `SELECT * FROM collection WHERE id = ? AND openid = ?`
         db.query(sqlStr, [id, openid], (err, result) => {
@@ -129,8 +129,8 @@ const WebNewsHandler = {
             })
             // 查询结果为空，说明没有收藏，则添加收藏
             if (result.length === 0) {
-                const sqlStr = `INSERT INTO collection (id, openid) VALUES (?, ?)`
-                db.query(sqlStr, [id, openid], (err, result) => {
+                const sqlStr = `INSERT INTO collection (id, openid,category) VALUES (?, ?, ?)`
+                db.query(sqlStr, [id, openid, category], (err, result) => {
                     // 添加收藏失败
                     if (err) return res.send({
                         status: 500,
@@ -158,6 +158,70 @@ const WebNewsHandler = {
             }
         })
 
+    },
+
+    // 个人收藏获取新闻列表接口
+    personcol: (req, res) => {
+        const { category, openid } = req.body
+        // category为0时，获取所有新闻列表
+        if (category == 0) {
+            const sqlStr = `SELECT * FROM collection WHERE openid = ?`
+            db.query(sqlStr, [openid], (err, result) => {
+                // 查询出错
+                if (err) return res.send({
+                    status: 500,
+                    message: '查询失败'
+                })
+                // 查询结果不为空，根据返回的id 查询user新闻列表 (多重查询)
+                if (result.length !== 0) {
+                    const sqlStr = `SELECT * FROM news WHERE id IN (?)`
+                    db.query(sqlStr, [result.map(item => item.id)], (err, result) => {
+                        // 查询出错
+                        if (err) return res.send({
+                            status: 500,
+                            message: '查询失败'
+                        })
+                        // 查询结果不为空，返回新闻列表
+                        if (result.length !== 0) {
+                            return res.send({
+                                status: 200,
+                                message: '查询成功',
+                                data: result
+                            })
+                        }
+                    })
+                }
+            })
+        } else {
+            // 根据category查询不同类别的新闻列表
+            const sqlStr = `SELECT * FROM collection WHERE openid = ? AND category = ?`
+            db.query(sqlStr, [openid, category], (err, result) => {
+                // 查询出错
+                if (err) return res.send({
+                    status: 500,
+                    message: '查询失败'
+                })
+                // 查询结果不为空，根据返回的id 查询user新闻列表 (多重查询)
+                if (result.length !== 0) {
+                    const sqlStr = `SELECT * FROM news WHERE id IN (?)`
+                    db.query(sqlStr, [result.map(item => item.id)], (err, result) => {
+                        // 查询出错
+                        if (err) return res.send({
+                            status: 500,
+                            message: '查询失败'
+                        })
+                        // 查询结果不为空，返回新闻列表
+                        if (result.length !== 0) {
+                            return res.send({
+                                status: 200,
+                                message: '查询成功',
+                                data: result
+                            })
+                        }
+                    })
+                }
+            })
+        }
     }
 }
 module.exports = WebNewsHandler
