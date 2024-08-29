@@ -6,16 +6,24 @@ const WebNewsHandler = {
 
         // 小程序端分类type------------
         const { type } = req.query
-        const category = Number(type) + 1
+        const category = Number(type)
         // ----------------------------
 
         if (type) {
             // 小程序端请求
-            const sqlStr = 'SELECT * FROM news WHERE isPublish = "1" AND category = ?  ORDER BY editTime DESC'
-            db.query(sqlStr, [category], (err, results) => {
-                if (err) return res.send({ ActionType: "Error", message: '列表获取失败' + err.message })
-                res.send({ ActionType: "OK", data: results, message: '获取新闻列表成功' })
-            })
+            if (category === 0) {
+                const sqlStr = 'SELECT * FROM news ORDER BY editTime DESC'
+                db.query(sqlStr, [category], (err, results) => {
+                    if (err) return res.send({ ActionType: "Error", message: '列表获取失败' + err.message })
+                    res.send({ ActionType: "OK", data: results, message: '获取新闻列表成功' })
+                })
+            } else {
+                const sqlStr = 'SELECT * FROM news WHERE isPublish = "1" AND category = ?  ORDER BY editTime DESC'
+                db.query(sqlStr, [category], (err, results) => {
+                    if (err) return res.send({ ActionType: "Error", message: '列表获取失败' + err.message })
+                    res.send({ ActionType: "OK", data: results, message: '获取新闻列表成功' })
+                })
+            }
         } else {
             // WEB端请求
             if (req.params.id) {
@@ -134,7 +142,7 @@ const WebNewsHandler = {
                         message: '添加收藏成功'
                     })
                 })
-            // 存在收藏，则取消收藏
+                // 存在收藏，则取消收藏
             } else {
                 const sqlStr = `DELETE FROM collection WHERE id = ? AND openid = ?`
                 db.query(sqlStr, [id, openid], (err, result) => {
