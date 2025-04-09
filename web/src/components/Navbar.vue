@@ -6,7 +6,7 @@
             <el-menu-item index="/product">产品与服务</el-menu-item>
             <el-menu-item index="" @click="handleClick">登录</el-menu-item>
         </el-menu>
-        <div class="right">偏爱王冰冰</div>
+        <!-- <div class="right">偏爱王冰冰</div> -->
     </div>
 </template>
 

@@ -107,7 +107,7 @@ app.use((req, res, next) => {
 
 app.use('/api/user', userRouter); //用户管理路由
 app.use('/api/news', newsRouter); //新闻管理路由
-app.use('/api/product', productRouter); //新闻管理路由
+app.use('/api/product', productRouter); //产品管理路由
 // 启动服务器
 app.listen(8089, () => {
     console.log('Server running at http://127.0.0.1:8089');

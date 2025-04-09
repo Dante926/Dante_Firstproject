@@ -6,7 +6,7 @@
                     :style="{ backgroundImage: 'url(' + require(`@/assets/${image}.jpg`) + ')' }"></div>
             </el-carousel-item>
         </el-carousel>
-        <div class="center">互联网+时代</div>
+        <div class="center">门户管理官网</div>
     </div>
 </template>
 
