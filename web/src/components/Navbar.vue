@@ -4,7 +4,7 @@
             <el-menu-item index="/">首页</el-menu-item>
             <el-menu-item index="/news">新闻中心</el-menu-item>
             <el-menu-item index="/product">产品与服务</el-menu-item>
-            <el-menu-item index="" @click="handleClick">登录</el-menu-item>
+            <el-menu-item index="/" @click="handleClick">登录</el-menu-item>
         </el-menu>
         <!-- <div class="right">偏爱王冰冰</div> -->
     </div>
@@ -15,7 +15,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const handleClick=()=>{
-    window.location='http://localhost:8081/'
+    window.location='http://localhost:8082/#/login'
 }
 </script>
 

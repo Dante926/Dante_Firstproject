@@ -1,5 +1,7 @@
 const db = require('../db/index');
 const JWT = require('../util/JWT');
+const { sendUserQueue } = require('../util/rabbitmq/producer')
+
 
 const newsHandler = {
     addnews: (req, res) => {

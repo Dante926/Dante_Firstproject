@@ -4,10 +4,8 @@
 */
 
 // 导入数据库操作模块
-const { date } = require('joi');
 const db = require('../db/index');
 const JWT = require('../util/JWT');
-
 
 // 个人信息更新处理函数
 const userHandler = {
@@ -101,15 +99,14 @@ const userHandler = {
 
     },
 
-    adduser: (req, res) => {
+    adduser: async (req, res) => {
         // 如果文件上传成功
         if (req) {
-            // console.log(req.file);
             // 解构数据
             const { username, password, gender, role, introduction } = req.body
             // 判断账号是否重复
             const sqlStr = 'select * from user where username=?'
-            db.query(sqlStr, username, (err, result) => {
+            db.query(sqlStr, username, async (err, result) => {
                 if (err) {
                     // 处理错误，例如记录错误或向客户端发送错误响应
                     console.error('检查用户名时出错:', err);
@@ -127,12 +124,6 @@ const userHandler = {
                     })
                 } else {
                     const avatar = req.file ? `/avataruploads/${req.file.filename}` : ''
-                    /*  获取id
-                     const token = req.headers.authorization.split(' ')[1];// 将token单独分离出来
-                     const payload = JWT.verify(token);
-                     const id = payload.id
-                     console.log(username, introduction, gender, avatar, id); 
-                    */
                     // 数据库操作
                     if (avatar) {
                         const sqlStr = 'INSERT INTO user (username, password, gender, role, avatar, introduction) VALUES (?, ?, ?, ?, ?, ?)';
@@ -155,7 +146,7 @@ const userHandler = {
                         })
                     } else {
                         const sqlStr = 'INSERT INTO user (username, password, gender, role, introduction) VALUES (?, ?, ?, ?, ?)';
-                        db.query(sqlStr, [username, password, gender, role, introduction], (err, results) => {
+                        db.query(sqlStr, [username, password, gender, role, introduction], async (err, results) => {
                             if (err) return res.send({ status: 1, message: err.message })
                             if (results.affectedRows !== 1) return res.send({ status: 1, message: '添加失败(avatar2)...' })
                             res.send({
@@ -174,8 +165,6 @@ const userHandler = {
                     }
                 }
             })
-
-
         }
         else {
             res.send({
@@ -183,7 +172,6 @@ const userHandler = {
                 message: '上传失败...'
             })
         }
-
     },
 
     getuserlist: (req, res) => {
@@ -197,7 +185,6 @@ const userHandler = {
                 delete result.password; // 删除password字段
                 return result;
             });
-
             res.send({
                 ActionType: "OK",
                 message: '获取用户列表成功',
@@ -263,6 +250,5 @@ const userHandler = {
             })
         }
     },
-
 }
 module.exports = userHandler

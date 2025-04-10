@@ -108,6 +108,13 @@ app.use((req, res, next) => {
 app.use('/api/user', userRouter); //用户管理路由
 app.use('/api/news', newsRouter); //新闻管理路由
 app.use('/api/product', productRouter); //产品管理路由
+
+// 服务类启动
+const { connectRabbitMQ } = require('./util/rabbitmq/rabbitmq');
+const { startConsumer } = require('./util/rabbitmq/consumer');
+connectRabbitMQ();
+startConsumer();
+
 // 启动服务器
 app.listen(8089, () => {
     console.log('Server running at http://127.0.0.1:8089');

@@ -12,8 +12,10 @@
   "dependencies": {
     "@escook/express-joi": "^1.1.1",
     "@hapi/joi": "^17.1.0",
+    "amqplib": "^0.10.7",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.17.1",
     "express-jwt": "^5.3.3",
     "joi": "^17.13.1",
